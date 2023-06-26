@@ -1,10 +1,10 @@
 # -- coding: utf-8 --
 # @Time : 2023/6/25
 # @Author : ykk648
-# @Project : https://github.com/ykk648/AI_power
+# @Project : https://github.com/ykk648/leetcode_useless
 
 class Solution:
-    # 200 岛屿数量
+    # 200 岛屿数量 (dfs 递归)
     def island_nums(self, grid):
         row, col, res = len(grid), len(grid[0]), 0
 

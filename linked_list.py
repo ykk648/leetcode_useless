@@ -1,7 +1,7 @@
 # -- coding: utf-8 --
 # @Time : 2023/6/25
 # @Author : ykk648
-# @Project : https://github.com/ykk648/AI_power
+# @Project : https://github.com/ykk648/leetcode_useless
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -94,18 +94,3 @@ class Solution:
             head2.next = self.merge_list_node(head1, head2.next)
             return head2
 
-    # 88 合并两个有序数组 （升序 双指针）
-    def merge_list(self, list1, m1, list2, m2):
-        p1, p2, tail = m1 - 1, m2 - 1, m1 + m2 - 1
-        while p1 >= 0 or p2 >= 0:
-            if p1 == -1:
-                list1[tail] = list2[p2]
-            elif p2 == -1:
-                list1[tail] = list1[p1]
-            elif list1[p1] < list2[p2]:
-                list1[tail] = list2[p2]
-                p2 -= 1
-            else:
-                list1[tail] = list1[p1]
-                p1 -= 1
-            tail -= 1

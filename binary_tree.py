@@ -1,7 +1,7 @@
 # -- coding: utf-8 --
 # @Time : 2023/6/25
 # @Author : ykk648
-# @Project : https://github.com/ykk648/AI_power
+# @Project : https://github.com/ykk648/leetcode_useless
 import collections
 
 

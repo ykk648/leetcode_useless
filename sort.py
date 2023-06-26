@@ -1,12 +1,12 @@
 # -- coding: utf-8 --
 # @Time : 2023/6/25
 # @Author : ykk648
-# @Project : https://github.com/ykk648/AI_power
+# @Project : https://github.com/ykk648/leetcode_useless
 import random
 
 
 class Solution:
-    # 912 排序数组
+    # 912 排序数组 （递归 分治）
     def quick_sort(self, num_list):
         if len(num_list) == 0:
             return num_list
