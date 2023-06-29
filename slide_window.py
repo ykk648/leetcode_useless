@@ -12,7 +12,7 @@ class Solution:
             hashmap[s[end]] = hashmap.get(s[end], 0) + 1
             if len(hashmap) == end - start + 1:
                 max_len = max(max_len, end - start)
-            while len(hashmap) > end - start + 1:
+            while len(hashmap) < end - start + 1:
                 head = s[start]
                 hashmap[head] -= 1
                 if len(hashmap[head]) == 1:

@@ -6,7 +6,7 @@ import random
 
 
 class Solution:
-    # 912 排序数组 （递归 分治）
+    # 912 排序数组 （递归 分治 升序）
     def quick_sort(self, num_list):
         if len(num_list) == 0:
             return num_list
