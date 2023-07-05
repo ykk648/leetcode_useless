@@ -48,6 +48,45 @@ class Solution:
             cur = temp
         return pre
 
+    # 92 反转链表II
+    def reverse_partial_from_head(self, head, left, right):
+        if not head:
+            return head
+            # 防止head被改变
+        dummy = ListNode(0)
+        dummy.next = head
+        # 开始遍历
+        start = dummy
+        end = head
+        count = 0
+        while end:
+            count += 1
+            if count < left:
+                start = start.next
+            if count < right + 1:
+                end = end.next
+            print(count, left, right)
+            if count == right + 1 or not end:
+                start = self.reverse_partial(start, end)
+                end = start.next
+                break
+        return dummy.next
+
+    def reverse_partial_count(self, start, count):
+        # 从start处翻转count次
+        # 区域翻转(start-end之间的部分)
+        cur, pre = start.next, start
+        dummy = cur
+        while count > 0:
+            temp = cur.next
+            cur.next = pre
+            pre = cur
+            cur = temp
+            count -= 1
+        start.next = pre
+        dummy.next = cur
+        return pre
+
     # 25 K个一组翻转列表
     def reverse_partial(self, start, end):
         # 区域翻转(start-end之间的部分)
@@ -93,4 +132,3 @@ class Solution:
         else:
             head2.next = self.merge_list_node(head1, head2.next)
             return head2
-
