@@ -140,6 +140,19 @@ class Solution:
             head2.next = self.merge_list_node(head1, head2.next)
             return head2
 
+    # 23 合并K个有序链表 （merge 归并）
+    def merge_k_list_node(self, list_nodes):
+        if not list_nodes:
+            return None
+
+        def merge_sort(lists, l, r):
+            if l == r:
+                return lists[l]
+            m = (l + r) // 2
+            return self.merge_list_node(merge_sort(lists, l, m), merge_sort(lists, m + 1, r))
+
+        return merge_sort(list_nodes, 0, len(list_nodes) - 1)
+
     # 328 奇偶链表
     def odd_even_list(self, head):
         if not head:
@@ -161,3 +174,14 @@ class Solution:
             p1 = p1.next if p1 else head2
             p2 = p2.next if p2 else head1
         return p1
+
+    # 19 删除链表的倒数N个节点 ( double p
+    def remove_reverse_k_node(self, head, n):
+        p1 = p2 = dummy = ListNode(next=head)
+        for _ in range(n):
+            p2 = p2.next
+        while p2.next:
+            p1 = p1.next
+            p2 = p2.next
+        p1.next = p1.next.next
+        return dummy
