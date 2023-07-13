@@ -20,6 +20,21 @@ class Solution:
                 right -= 1
         return res
 
+    # 415 字符串相加
+    def str_sum(self, num1, num2):
+        p1, p2, carry, res = len(num1) - 1, len(num2) - 1, 0, ''
+        while p1 >= 0 or p2 >= 0:
+            n1 = num1[p1] if p1 >= 0 else 0
+            n2 = num2[p2] if p2 >= 0 else 0
+            sum_ = int(n1) + int(n2) + carry
+            carry = sum_ // 10
+            res = str(sum_ % 10) + res
+            p1 -= 1
+            p2 -= 1
+        if carry > 0:
+            res = '1' + res
+        return res
+
     # 88 合并两个有序数组 （升序 双指针）
     def merge_list(self, list1, m1, list2, m2):
         p1, p2, tail = m1 - 1, m2 - 1, m1 + m2 - 1

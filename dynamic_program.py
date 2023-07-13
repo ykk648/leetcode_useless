@@ -30,6 +30,18 @@ class Solution:
                 dp[i] = dp[i - 1] + nums[i]
         return max(dp)
 
+    # 300 最长上升子序列
+    def max_length_ascending(self, nums):
+        n = len(nums)
+        if n == 0:
+            return nums
+        dp = [1] * n
+        for i in range(n):
+            for j in range(i):
+                if nums[i] > nums[j]:
+                    dp[i] = max(dp[i], dp[j] + 1)
+        return max(dp)
+
     # 5 最长回文子串 （二维DP）
     def max_sub_palindrome(self, s):
         n = len(s)
