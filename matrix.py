@@ -11,6 +11,7 @@ class Solution:
             res.append(matrix.pop(0))
             matrix = list(zip(*matrix))[::-1]
         return res
+
     # (state machine)
     def spiral_order_state(self, matrix):
         if not matrix or not matrix[0]:

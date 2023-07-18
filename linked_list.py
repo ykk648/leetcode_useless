@@ -17,35 +17,35 @@ def get_listnode_length(head):
     return count
 
 
-def reverse_partial(start, end):
-    # 区域翻转(start-end之间的部分) 返回start-end区间中的头尾节点 inplace
-    pre, cur = start, start.next
-    dummy = cur  # 尾节点
-    while cur != end:
-        temp = cur.next
-        cur.next = pre
-        pre = cur
-        cur = temp
-    start.next = pre
-    dummy.next = cur  # 尾节点连接
-    return pre, dummy
-
-
-def reverse_partial_count(start, count):
-    # 从start处翻转count次， count = start-end+1与reverse_partial一致，返回start下一个节点
-    cur, pre = start.next, start
-    dummy = cur  # 尾节点
-    for _ in range(count):
-        temp = cur.next
-        cur.next = pre
-        pre = cur
-        cur = temp
-    start.next = pre
-    dummy.next = cur  # 尾节点连接
-    return pre, dummy
-
-
 class LinkReverse:
+    @staticmethod
+    def reverse_partial(start, end):
+        # 区域翻转(start-end之间的部分) 返回start-end区间中的头尾节点 inplace
+        pre, cur = start, start.next
+        dummy = cur  # 尾节点
+        while cur != end:
+            temp = cur.next
+            cur.next = pre
+            pre = cur
+            cur = temp
+        start.next = pre
+        dummy.next = cur  # 尾节点连接
+        return pre, dummy
+
+    @staticmethod
+    def reverse_partial_count(start, count):
+        # 从start处翻转count次， count = start-end+1与reverse_partial一致，返回start下一个节点
+        cur, pre = start.next, start
+        dummy = cur  # 尾节点
+        for _ in range(count):
+            temp = cur.next
+            cur.next = pre
+            pre = cur
+            cur = temp
+        start.next = pre
+        dummy.next = cur  # 尾节点连接
+        return pre, dummy
+
     # 206 反转链表
     def reverse(self, head):
         cur, pre = head, None
@@ -61,7 +61,7 @@ class LinkReverse:
         if not head:
             return head
         dummy = ListNode(0, next=head)
-        _, _ = reverse_partial(dummy, None)
+        _, _ = self.reverse_partial(dummy, None)
         return dummy.next
 
     # 92 反转链表II
@@ -71,7 +71,7 @@ class LinkReverse:
         cur = dummy = ListNode(0, next=head)  # 防止head被改变
         for _ in range(left - 1):
             cur = cur.next
-        _, _ = reverse_partial_count(cur, right - left + 1)
+        _, _ = self.reverse_partial_count(cur, right - left + 1)
         return dummy.next
 
     # 25 K个一组翻转列表 复用写法
@@ -81,11 +81,11 @@ class LinkReverse:
         cur = dummy = ListNode(0, next=head)
         length = get_listnode_length(head)
         for _ in range(length // k):
-            _, cur = reverse_partial_count(cur, k)
+            _, cur = self.reverse_partial_count(cur, k)
         return dummy.next
 
 
-class DoubleP:
+class DoubleP(LinkReverse):
     # 141 环形链表
     def cycle_judge(self, head):
         # 2节点以下无法成环
@@ -133,6 +133,16 @@ class DoubleP:
         p1.next = p1.next.next
         return dummy
 
+    # 剑指offer 22 获取链表倒数K个节点
+    def get_reverse_k_node(self, head, k):
+        p1 = p2 = ListNode(next=head)
+        for _ in range(k+1):
+            p2 = p2.next
+        while p2.next:
+            p1 = p1.next
+            p2 = p2.next
+        return p1
+
     # 876 链表的中间节点
     def middle_node(self, head):
         slow = fast = head
@@ -154,6 +164,18 @@ class DoubleP:
             even = even.next
         odd.next = dummy
         return head
+
+    # 143 重排链表
+    def reorder_lists(self, head):
+        mid_node = self.middle_node(head)
+        reverse_right = self.reverse(mid_node.next)
+        mid_node.next = None
+        while reverse_right:
+            dummy = head.next
+            head.next = reverse_right
+            reverse_right = reverse_right.next
+            head.next.next = dummy
+            head = dummy
 
 
 class Solution:

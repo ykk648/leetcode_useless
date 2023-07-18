@@ -42,6 +42,19 @@ class Solution:
                     dp[i] = max(dp[i], dp[j] + 1)
         return max(dp)
 
+    # 1143 最长公共子序列
+    def max_common_sequence(self, text1, text2):
+        n1, n2 = len(text1) + 1, len(text2) + 1
+        dp = [[0] * n2 for _ in range(n1)]
+
+        for i in range(1, n1):
+            for j in range(1, n2):
+                if text1[i - 1] == text2[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+        return dp[-1][-1]
+
     # 5 最长回文子串 （二维DP）
     def max_sub_palindrome(self, s):
         n = len(s)
@@ -69,3 +82,19 @@ class Solution:
                     max_len = j - i + 1
                     begin = i
         return s[begin:begin + max_len]
+
+    # 72 编辑距离
+    def min_dis(self, word1, word2):
+        n1, n2 = len(word1) + 1, len(word2) + 1
+        dp = [[0] * n1 for _ in range(n2)]
+
+        for i in range(n1):
+            dp[i][0] = i
+        for i in range(n2):
+            dp[0][i] = i
+        for i in range(1, n1):
+            for j in range(1, n2):
+                dp[i][j] = min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]) + 1
+                if word1[i - 1] == word2[j - 1]:
+                    dp[i][j] = min(dp[i - 1][j - 1], dp[i][j])
+        return dp[-1][-1]
