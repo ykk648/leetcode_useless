@@ -16,6 +16,17 @@ class Solution:
             dp[i] = max(dp[i - 1], prices[i] - min_price)
         return dp[-1]
 
+    # 70 爬楼梯
+    def climb_stairs(self, n):
+        if n <= 1:
+            return n
+        dp = [0] * n
+        dp[0] = 1
+        dp[1] = 2
+        for i in range(2, n):
+            dp[i] = dp[i - 1] + dp[i - 2]
+        return dp[-1]
+
     # 53 最大子序和
     def max_sum(self, nums):
         n = len(nums)

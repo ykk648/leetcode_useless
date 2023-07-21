@@ -136,7 +136,7 @@ class DoubleP(LinkReverse):
     # 剑指offer 22 获取链表倒数K个节点
     def get_reverse_k_node(self, head, k):
         p1 = p2 = ListNode(next=head)
-        for _ in range(k+1):
+        for _ in range(k + 1):
             p2 = p2.next
         while p2.next:
             p1 = p1.next
@@ -178,7 +178,7 @@ class DoubleP(LinkReverse):
             head = dummy
 
 
-class Solution:
+class Solution(DoubleP):
 
     # 21 合并两个有序链表 （递归）
     def merge_list_node(self, head1, head2):
@@ -192,6 +192,24 @@ class Solution:
         else:
             head2.next = self.merge_list_node(head1, head2.next)
             return head2
+
+    # 148 排序链表
+    def reorder_list_node(self, head):
+        if not head or not head.next:
+            return head
+        mid_node = self.middle_node(head)
+
+        if mid_node.next:
+            mid_next = mid_node.next
+            mid_node.next = None
+        else:
+            mid_next = mid_node
+            head.next = None
+
+        left = self.reorder_list_node(head)
+        right = self.reorder_list_node(mid_next)
+        merged = self.merge_list_node(left, right)
+        return merged
 
     # 23 合并K个有序链表 （merge 归并）
     def merge_k_list_node(self, list_nodes):
