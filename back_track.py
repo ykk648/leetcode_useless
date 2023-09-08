@@ -16,3 +16,19 @@ class Solution:
 
         backtrack(nums, [])
         return res
+
+    # 93 复原IP地址
+    def restoreIpAddresses(self, s):
+        res = []
+
+        def backtrack(s, idx, tmp):
+            if idx > 4:
+                return
+            if idx == 4 and not s:
+                res.append(tmp[:-1])
+            for i in range(len(s)):
+                if s[:i + 1] == '0' or (s[0] != '0' and 0 < int(s[:i + 1]) < 256):
+                    backtrack(s[i + 1:], idx + 1, tmp + s[:i + 1] + '.')
+
+        backtrack(s, 0, '')
+        return res

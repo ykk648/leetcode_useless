@@ -6,15 +6,6 @@ import random
 
 
 class Solution:
-    # 912 排序数组 （recursion divide&conquer 升序）
-    def quick_sort(self, num_list):
-        if len(num_list) == 0:
-            return num_list
-        pivot = random.choice(num_list)
-        left = self.quick_sort([x for x in num_list if x < pivot])
-        right = self.quick_sort([x for x in num_list if x > pivot])
-        middle = [x for x in num_list if x == pivot]
-        return left + middle + right
 
     # 215 数组第K个最大元素
     def get_k_max(self, num_list, k):
@@ -41,3 +32,24 @@ class Solution:
                 else:
                     right = mid - 1
         return -1
+
+    # 4 寻找两个正序数组中位数
+    def findMedianSortedArrays(self, nums1, nums2):
+        def find_k_min(nums1, nums2, k):
+            if not nums2:
+                return nums1[k - 1]
+            if not nums1:
+                return nums2[k - 1]
+            if k == 1:
+                return min(nums1[0], nums2[0])
+            t = min(len(nums1), len(nums2), k // 2) # divide 二分
+            if nums1[t - 1] < nums2[t - 1]:
+                return find_k_min(nums1[t:], nums2, k - t)
+            else:
+                return find_k_min(nums1, nums2[t:], k - t)
+
+        m, n = len(nums1), len(nums2)
+        k1 = (m + n + 1) // 2
+        k2 = (m + n + 2) // 2
+        # 中位数等于第k1小和k2小的均值
+        return (find_k_min(nums1, nums2, k1) + find_k_min(nums1, nums2, k2)) / 2

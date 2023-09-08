@@ -177,6 +177,21 @@ class DoubleP(LinkReverse):
             head.next.next = dummy
             head = dummy
 
+    # 82 删除链表重复元素
+    def deleteDuplicates(self, head):
+        if not head:
+            return head
+        dummy = ListNode(0, head)
+        cur = dummy
+        while cur.next and cur.next.next:
+            if cur.next.val == cur.next.next.val:
+                x = cur.next.next.val
+                while cur.next and cur.next.val == x:
+                    cur.next = cur.next.next
+            else:
+                cur = cur.next
+        return dummy.next
+
 
 class Solution(DoubleP):
 
