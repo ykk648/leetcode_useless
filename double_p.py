@@ -93,3 +93,31 @@ class Solution:
                     while i < j and nums[j] == nums[j + 1]:
                         j -= 1
         return res
+
+    # 31 下一个排列 （下一个字典序列的更大值）
+    def nextPermutation(self, nums):
+        n = len(nums)
+        if n < 1:
+            return
+
+        # 逆序找到第一个小值
+        modify = -1
+        for i in range(n - 2, -1, -1):
+            if nums[i] < nums[i + 1]:
+                modify = i
+                break
+
+        if modify == -1:
+            # 无小值全翻转
+            nums[:] = nums[::-1]
+        else:
+            # 逆序找到第一个比小值大的值
+            target = -1
+            for i in range(n - 1, modify, -1):
+                if nums[i] > nums[modify]:
+                    target = i
+                    break
+            # exchange
+            nums[modify], nums[target] = nums[target], nums[modify]
+            # 小值后翻转 （降序变升序）
+            nums[modify+1:] = nums[modify+1:][::-1]

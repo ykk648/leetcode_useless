@@ -42,7 +42,7 @@ class Solution:
                 return nums2[k - 1]
             if k == 1:
                 return min(nums1[0], nums2[0])
-            t = min(len(nums1), len(nums2), k // 2) # divide 二分
+            t = min(len(nums1), len(nums2), k // 2)  # divide 二分
             if nums1[t - 1] < nums2[t - 1]:
                 return find_k_min(nums1[t:], nums2, k - t)
             else:
@@ -53,3 +53,15 @@ class Solution:
         k2 = (m + n + 2) // 2
         # 中位数等于第k1小和k2小的均值
         return (find_k_min(nums1, nums2, k1) + find_k_min(nums1, nums2, k2)) / 2
+
+    # 69 x的平方根
+    def mySqrt(self, x):
+        l, h, ans = 0, x, -1
+        while l <= h:
+            mid = l + (h - l) // 2
+            if mid * mid <= x:
+                ans = mid
+                l = mid + 1
+            else:
+                h = mid - 1
+        return ans

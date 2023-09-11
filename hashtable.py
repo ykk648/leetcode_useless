@@ -26,5 +26,17 @@ class LruCache:
         self.ht[key] = value
 
 
-# class Solution:
-#     def lru_cache(self, ):
+class Solution:
+    # 41 缺失的第一个正数（原地hash）
+    def swap(self, nums, index1, index2):
+        nums[index1], nums[index2] = nums[index2], nums[index1]
+
+    def firstMissingPositive(self, nums):
+        length = len(nums)
+        for i in range(length):
+            while 1 <= nums[i] <= length and nums[i] != nums[nums[i] - 1]:
+                self.swap(nums, i, nums[i] - 1)
+        for i in range(length):
+            if i + 1 != nums[i]:
+                return i + 1
+        return length + 1
