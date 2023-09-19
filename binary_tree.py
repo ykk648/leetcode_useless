@@ -6,11 +6,18 @@ import collections
 import math
 
 
+class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
 class Traversal:
     # 144 前序遍历 94 中序遍历 145 后序遍历
     def order_recursion(self, root):
         if not root:
-            return root
+            return []
         # return [root.val] + self.order_recursion(root.left) + self.order_recursion(root.right)  # 前序
         # return self.order_recursion(root.left) + [root.val] + self.order_recursion(root.right)  # 中序
         return self.order_recursion(root.left) + self.order_recursion(root.right) + [root.val]  # 后序
@@ -139,3 +146,49 @@ class Solution:
 
         dfs(root)
         return self.ans
+
+    # 104 二叉树的最大深度
+    def maxDepth(self, root):
+        if not root:
+            return 0
+        return max(self.maxDepth(root.left), self.maxDepth(root.right)) + 1
+
+    # 105 从前序和中序构造二叉树
+    def buildTree(self, preorder, inorder):
+        if not preorder or not inorder:
+            return
+        root = TreeNode(preorder[0])
+        idx = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1:1 + idx], inorder[:idx])
+        root.right = self.buildTree(preorder[1 + idx:], inorder[idx + 1:])
+        return root
+
+    # 110 平衡二叉树
+    def isBalanced(self, root):
+        def depth(root_):
+            if not root_:
+                return 0
+            left = depth(root_.left)
+            if left == -1:
+                return -1
+            right = depth(root_.right)
+            if right == -1:
+                return -1
+            return max(left, right) if abs(left - right) <= 1 else -1
+
+        return depth(root) != -1
+
+    # 543 二叉树的直径
+    def diameterOfBinaryTree(self, root):
+        self.max_depth = 0
+
+        def depth(root_):
+            if not root_:
+                return 0
+            left = depth(root_.left)
+            right = depth(root_.right)
+            self.max_depth = max(self.max_depth, left + right)
+            return max(left, right) + 1
+
+        depth(root)
+        return self.max_depth

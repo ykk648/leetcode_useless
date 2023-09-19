@@ -6,6 +6,8 @@
 class Solution:
     # 46 全排列 （dfs）
     def find_all_iters(self, nums):
+        if not nums:
+            return []
         res = []
 
         def dfs(nums_, tmp):
@@ -15,6 +17,54 @@ class Solution:
                 dfs(nums_[:i] + nums_[i + 1:], tmp + [nums_[i]])
 
         dfs(nums, [])
+        return res
+
+    # 47 全排列2 （可重复）
+    def permuteUnique(self, nums):
+        if not nums:
+            return []
+        res = []
+        nums.sort()
+
+        def dfs(nums_, tmp):
+            if not nums_ and tmp not in res:
+                res.append(tmp)
+            for i in range(len(nums_)):
+                dfs(nums_[:i] + nums_[i + 1:], tmp + [nums_[i]])
+
+        dfs(nums, [])
+        return res
+
+    # 78 子集
+    def subsets(self, nums):
+        if not nums:
+            return []
+        res = []
+        n = len(nums)
+
+        def dfs(i, tmp):
+            res.append(tmp)
+            for j in range(i, n):
+                dfs(j+1, tmp + [nums[j]])
+
+        dfs(0, [])
+        return res
+
+    # 90 子集2 （可重复）
+    def subsetsWithDup(self, nums):
+        if not nums:
+            return []
+        res = []
+        nums.sort()
+        n = len(nums)
+
+        def dfs(i, tmp):
+            if tmp not in res:
+                res.append(tmp)
+            for j in range(i, n):
+                dfs(j+1, tmp + [nums[j]])
+
+        dfs(0, [])
         return res
 
     # 93 复原IP地址

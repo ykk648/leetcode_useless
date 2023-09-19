@@ -109,3 +109,23 @@ class Solution:
                 if word1[i - 1] == word2[j - 1]:
                     dp[i][j] = min(dp[i - 1][j - 1], dp[i][j])
         return dp[-1][-1]
+
+
+class KnapsackProblem:
+    # 322 零钱兑换 （返回最小硬币数量）
+    def coinChange(self, coins, amount):
+        dp = [amount + 1] * (amount + 1)
+        dp[0] = 0
+        for coin in coins:
+            for j in range(coin, amount + 1):
+                dp[j] = min(dp[j], dp[j - coin] + 1)
+        return dp[amount] if dp[amount] != amount + 1 else -1
+
+    # 518 零钱兑换2 （返回组合数）
+    def coinChange2(self, coins, amount):
+        dp = [0] * (amount + 1)
+        dp[0] = 1
+        for coin in coins:
+            for j in range(coin, amount + 1):
+                dp[j] += dp[j - coin]
+        return dp[amount]

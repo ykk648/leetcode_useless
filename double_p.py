@@ -120,4 +120,38 @@ class Solution:
             # exchange
             nums[modify], nums[target] = nums[target], nums[modify]
             # 小值后翻转 （降序变升序）
-            nums[modify+1:] = nums[modify+1:][::-1]
+            nums[modify + 1:] = nums[modify + 1:][::-1]
+
+    # 165 比较版本号
+    def compareVersion(self, version1, version2):
+        m, n = len(version1), len(version2)
+        i, j = 0, 0
+        while i < m or j < n:
+            a = b = 0
+            while i < m and version1[i] != '.':
+                a = 10 * a + int(version1[i])
+                i += 1
+            while j < n and version1[j] != '.':
+                b = 10 * b + int(version2[j])
+                j += 1
+            if a > b:
+                return 1
+            elif a < b:
+                return -1
+            i += 1
+            j += 1
+        return 0
+
+    # 151 翻转字符串中的单词
+    def reverseWords(self, s):
+        s = s.strip()
+        i = j = len(s) - 1
+        res = []
+        while i >= 0:
+            while i >= 0 and s[i] != ' ':
+                i -= 1
+            res.append(s[i + 1:j + 1])
+            while i >= 0 and s[i] == ' ':
+                i -= 1
+            j = i
+        return ' '.join(res)

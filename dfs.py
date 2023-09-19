@@ -22,3 +22,4 @@ class Solution:
                     dfs(x, y)
                     res += 1
         return res
+

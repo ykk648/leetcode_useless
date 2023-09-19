@@ -41,3 +41,23 @@ class Solution:
 
         def empty(self):
             return not self.s1 and not self.s2
+
+    # 155 最小栈
+    class MinStack:
+        def __init__(self):
+            self.stack = []
+
+        def push(self, val):
+            if not self.stack:
+                self.stack.append((val,val))
+            else:
+                self.stack.append((val, min(self.stack[-1][1])))
+
+        def pop(self):
+            self.stack.pop()
+
+        def top(self):
+            return self.stack[-1][0]
+
+        def getMin(self):
+            return self.stack[-1][1]
