@@ -43,3 +43,12 @@ class Solution:
             x += dirs[cur_d][0]
             y += dirs[cur_d][1]
         return res
+
+    # 48 旋转图像
+    def rotate(self, matrix):
+        n = len(matrix)
+        for i in range(n):
+            for j in range(i):
+                matrix[i][j], matrix[j][i] = matrix[j][i], matrix[i][j]
+        for i in range(n):
+            matrix[i] = matrix[i][::-1]

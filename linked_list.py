@@ -146,6 +146,12 @@ class DoubleP(LinkReverse):
     # 876 链表的中间节点
     def middle_node(self, head):
         slow = fast = head
+
+        # # mid节点左节点
+        # while fast.next and fast.next.next:
+        #     slow = slow.next
+        #     fast = fast.next.next
+
         while fast and fast.next:
             slow = slow.next
             fast = fast.next.next
@@ -191,6 +197,23 @@ class DoubleP(LinkReverse):
             else:
                 cur = cur.next
         return dummy.next
+
+    # 234 回文链表
+    def isPalindrome(self, head):
+        if not head:
+            return head
+        if not head.next:
+            return True
+        mid_pre = self.middle_node(head)  # 左节点
+        pre, dummy = self.reverse_partial(mid_pre, None)
+        mid_pre.next = None
+
+        while pre:
+            if head.val != pre.val:
+                return False
+            head = head.next
+            pre = pre.next
+        return True
 
 
 class Solution(DoubleP):

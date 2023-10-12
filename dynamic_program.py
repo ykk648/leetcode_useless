@@ -110,6 +110,34 @@ class Solution:
                     dp[i][j] = min(dp[i - 1][j - 1], dp[i][j])
         return dp[-1][-1]
 
+    # 221 最大正方形1的面积
+    def maximalSquare(self, matrix):
+        if not matrix:
+            return 0
+        row, col, res = len(matrix), len(matrix[0]), 0
+        dp = [[0] * (col + 1) for _ in range(row + 1)]
+        for i in range(1, row + 1):
+            for j in range(1, col + 1):
+                if matrix[i - 1][j - 1] == '1':
+                    dp[i][j] = min(dp[i - 1][j - 1], dp[i - 1][j], dp[i][j - 1]) + 1
+                    res = max(dp[i][j], res)
+        return res * res
+
+    # 64 最小路径和
+    def minPathSum(self, grid):
+        row, col = len(grid), len(grid[0])
+        for i in range(row):
+            for j in range(col):
+                if i == j == 0:
+                    continue
+                elif i == 0:
+                    grid[i][j] = grid[i][j - 1] + grid[i][j]
+                elif j == 0:
+                    grid[i][j] = grid[i - 1][j] + grid[i][j]
+                else:
+                    grid[i][j] = min(grid[i - 1][j], grid[i][j - 1]) + grid[i][j]
+        return grid[-1][-1]
+
 
 class KnapsackProblem:
     # 322 零钱兑换 （返回最小硬币数量）

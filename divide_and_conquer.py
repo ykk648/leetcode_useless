@@ -65,3 +65,37 @@ class Solution:
             else:
                 h = mid - 1
         return ans
+
+    # 34 排序数组中查找元素左右边界位置 递增
+    def searchRange(self, nums, target):
+        def searchLeft(nums, target):
+            l, r = 0, len(nums) - 1
+            while l <= r:
+                mid = (r - l) // 2 + l
+                if nums[mid] == target:
+                    if mid == 0 or nums[mid - 1] < target:
+                        return mid
+                    else:
+                        r = mid - 1
+                elif nums[mid] > target:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            return -1
+
+        def searchRight(nums, target):
+            l, r = 0, len(nums) - 1
+            while l <= r:
+                mid = (r - l) // 2 + l
+                if nums[mid] == target:
+                    if mid == len(nums) - 1 or nums[mid + 1] > target:
+                        return mid
+                    else:
+                        l = mid + 1
+                elif nums[mid] > target:
+                    r = mid - 1
+                else:
+                    l = mid + 1
+            return -1
+
+        return [searchLeft(nums, target), searchRight(nums, target)]

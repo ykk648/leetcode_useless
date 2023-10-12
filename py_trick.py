@@ -29,4 +29,17 @@ class Solution:
             f1 *= 10
         return str(res)
 
+    # 470 用rand(7)实现rand(10)
+    def rand10(self):
+        """
+        (randX() - 1)*Y + randY() 可以等概率的生成[1, X * Y]范围的随机数
+        :return:
+        """
 
+        def rand7():
+            return 0
+
+        num = (rand7() - 1) * 7 + rand7()
+        while num > 40:
+            num = (rand7() - 1) * 7 + rand7()
+        return 1 + num % 10

@@ -45,7 +45,7 @@ class Solution:
         def dfs(i, tmp):
             res.append(tmp)
             for j in range(i, n):
-                dfs(j+1, tmp + [nums[j]])
+                dfs(j + 1, tmp + [nums[j]])
 
         dfs(0, [])
         return res
@@ -62,9 +62,29 @@ class Solution:
             if tmp not in res:
                 res.append(tmp)
             for j in range(i, n):
-                dfs(j+1, tmp + [nums[j]])
+                dfs(j + 1, tmp + [nums[j]])
 
         dfs(0, [])
+        return res
+
+    # 39 组合总和
+    def combinationSum(self, candidates, target):
+        res, combine = [], []
+        n = len(candidates)
+        candidates.sort()
+
+        def dfs(begin, combine, target):
+            if target < 0:
+                return
+            if target == 0:
+                res.append(combine)
+                return
+            for idx in range(begin, n):
+                if target - candidates[idx] < 0:
+                    break
+                dfs(idx, combine + [candidates[idx]], target - candidates[idx])
+
+        dfs(0, combine, target)
         return res
 
     # 93 复原IP地址
