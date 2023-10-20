@@ -41,6 +41,19 @@ class Solution:
                 dp[i] = dp[i - 1] + nums[i]
         return max(dp)
 
+    # 718 最长重复子数组 （连续） dp:分别以i j结尾的子数组是否一致
+    def findLength(self, nums1, nums2):
+        n1, n2, ans = len(nums1), len(nums2), 0
+        if n1 == 0 or n2 == 0:
+            return []
+        dp = [[0 for _ in range(n2 + 1)] for _ in range(n1 + 1)]
+        for i in range(1, n1 + 1):
+            for j in range(1, n2 + 1):
+                if nums1[i - 1] == nums2[i - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                    ans = max(ans, dp[i][j])
+        return ans
+
     # 300 最长上升子序列
     def max_length_ascending(self, nums):
         n = len(nums)
@@ -53,7 +66,7 @@ class Solution:
                     dp[i] = max(dp[i], dp[j] + 1)
         return max(dp)
 
-    # 1143 最长公共子序列
+    # 1143 最长公共子序列 （非连续）
     def max_common_sequence(self, text1, text2):
         n1, n2 = len(text1) + 1, len(text2) + 1
         dp = [[0] * n2 for _ in range(n1)]
@@ -157,3 +170,18 @@ class KnapsackProblem:
             for j in range(coin, amount + 1):
                 dp[j] += dp[j - coin]
         return dp[amount]
+
+
+class RobProblem:
+    # 198 打家劫舍 只能间隔选取要偷的房间
+    def rob(self, nums):
+        pre, cur = 0, 0
+        for num in nums:
+            pre, cur = cur, max(cur, pre + num)
+        return cur
+
+    # 213 打家劫舍2 要偷的房间是环形的，第一与最后一个只能偷一个
+    def rob_2(self, nums):
+        if len(nums) == 1:
+            return nums[0]
+        return max(self.rob(nums[1:]), self.rob(nums[:-1]))

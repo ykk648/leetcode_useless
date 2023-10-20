@@ -48,7 +48,7 @@ class Solution:
             res = '1' + res
         return res
 
-    # 88 合并两个有序数组 （升序 双指针）
+    # 88 合并两个有序数组 （升序 双指针 nums1的初始长度为m+n 要求inplace操作）
     def merge_list(self, list1, m1, list2, m2):
         p1, p2, tail = m1 - 1, m2 - 1, m1 + m2 - 1
         while p1 >= 0 or p2 >= 0:

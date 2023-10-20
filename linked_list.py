@@ -34,7 +34,7 @@ class LinkReverse:
 
     @staticmethod
     def reverse_partial_count(start, count):
-        # 从start处翻转count次， count = start-end+1与reverse_partial一致，返回start下一个节点
+        # 从start处翻转count次， count = end-start+1与reverse_partial一致，返回start下一个节点
         cur, pre = start.next, start
         dummy = cur  # 尾节点
         for _ in range(count):
@@ -64,7 +64,7 @@ class LinkReverse:
         _, _ = self.reverse_partial(dummy, None)
         return dummy.next
 
-    # 92 反转链表II
+    # 92 反转链表II 翻转某一段链表
     def reverse_partial_from_head(self, head, left, right):
         if not head or left == right:
             return head
@@ -82,6 +82,16 @@ class LinkReverse:
         length = get_listnode_length(head)
         for _ in range(length // k):
             _, cur = self.reverse_partial_count(cur, k)
+        return dummy.next
+
+    # 24 两两交换链表节点
+    def swapPairs(self, head):
+        if not head or not head.next:
+            return head
+        cur = dummy = ListNode(0, next=head)
+        while cur.next and cur.next.next:
+            self.reverse_partial_count(cur, 2)
+            cur = cur.next.next
         return dummy.next
 
 
@@ -183,21 +193,6 @@ class DoubleP(LinkReverse):
             head.next.next = dummy
             head = dummy
 
-    # 82 删除链表重复元素
-    def deleteDuplicates(self, head):
-        if not head:
-            return head
-        dummy = ListNode(0, head)
-        cur = dummy
-        while cur.next and cur.next.next:
-            if cur.next.val == cur.next.next.val:
-                x = cur.next.next.val
-                while cur.next and cur.next.val == x:
-                    cur.next = cur.next.next
-            else:
-                cur = cur.next
-        return dummy.next
-
     # 234 回文链表
     def isPalindrome(self, head):
         if not head:
@@ -273,4 +268,20 @@ class Solution(DoubleP):
             cur = cur.next
             l1 = l1.next if l1 else None
             l2 = l2.next if l2 else None
+        return dummy.next
+
+    # 82/83 删除排序链表中的重复元素 （保留1个/不保留）
+    def deleteDuplicates(self, head):
+        if not head or not head.next:
+            return head
+        cur = dummy = ListNode(0, next=head)
+        while cur.next and cur.next.next:
+            if cur.next.val == cur.next.next.val:
+                temp = cur.next.next.val
+                # # 83 删除排序链表中的重复元素 （保留1个）
+                # cur = cur.next
+                while cur.next and cur.next.val==temp:
+                    cur.next = cur.next.next
+            else:
+                cur = cur.next
         return dummy.next
